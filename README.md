@@ -28,9 +28,9 @@ You can find extensive usage information for every Component and class in the Wi
 
 ## Sample projects
 
-The *Examples* folder contains some starting projects that show the main features of this library, which you can use as a reference:
+The *Assets/Examples* folder contains some sample scenes with setups that show the main features of this library, which you can use as a reference:
 
 -   **Hello ARC:** setting up a minimal ARC Session and spawning a 3D object that appears in the same physical place for every user
+-   **ARC BoxStax:** a multiplayer minigame, built on top of the Hello ARC project, where users must pile up size-varying boxes without letting them fall to the ground
 -   **ARC Sandbox:** users can spawn and manipulate primitives that stay in place or behave according to the laws of physics
--   **ARC BoxStax:** a multiplayer minigame where users must pile up size-varying boxes without letting them fall to the ground
 
