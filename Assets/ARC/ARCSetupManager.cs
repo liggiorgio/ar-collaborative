@@ -208,22 +208,31 @@ namespace ARC
 
                 CreateAnchor(Vector3.zero, Quaternion.identity);
 
-                _staticScene = Instantiate(_staticScenePrefab);
-                _staticScene.transform.SetParent(ARCSession.origin);
-                _staticScene.transform.localPosition = Vector3.zero;
-                _staticScene.transform.localRotation = Quaternion.identity;
+                if (_staticScenePrefab != null)
+                {
+                    _staticScene = Instantiate(_staticScenePrefab);
+                    _staticScene.transform.SetParent(ARCSession.origin);
+                    _staticScene.transform.localPosition = Vector3.zero;
+                    _staticScene.transform.localRotation = Quaternion.identity;
+                }
                 
                 sessionEvents.sessionAnchorCreated.Invoke();
 
-                FindObjectOfType<ARCSampleInterface>().ShowScreen(3);
                 ((ARCUser) _captainsMess.LocalPlayer()).SendReadyToBeginMessage();
-                ((ARCUser) _captainsMess.LocalPlayer()).GetComponent<UserInteraction>().ToggleUI(false);
             }
         }
 
         public void RegisterMarkerPosition(Vector3 position, string name)
         {
-            GameObject newAnchor = Instantiate(_markerPendingPrefab, position, Quaternion.identity);
+            GameObject newAnchor;
+            if (_markerPendingPrefab == null)
+            {
+                newAnchor = new GameObject();
+                newAnchor.transform.position = position;
+            }
+            else
+                newAnchor = Instantiate(_markerPendingPrefab, position, Quaternion.identity);
+            
             _anchors.Add(name, newAnchor);
             
             int markerIndex = Convert.ToInt32(name.Substring(name.Length - 1));
@@ -248,7 +257,14 @@ namespace ARC
             
             foreach (Vector3 a in anchors)
             {
-                GameObject anchor = Instantiate(_markerDonePrefab, a, Quaternion.identity);
+                GameObject anchor;
+                if (_markerDonePrefab == null)
+                {
+                    anchor = new GameObject();
+                    anchor.transform.position = a;
+                }
+                else
+                    anchor = Instantiate(_markerDonePrefab, a, Quaternion.identity);
             }
 
             for (int i = 0; i < _anchors.Values.Count; ++i) { Destroy(_anchors.Values[i]); }
@@ -256,10 +272,13 @@ namespace ARC
 
             CreateAnchor(origin, orientation);
 
-            _staticScene = Instantiate(_staticScenePrefab);
-            _staticScene.transform.SetParent(ARCSession.origin);
-            _staticScene.transform.localPosition = Vector3.zero;
-            _staticScene.transform.localRotation = Quaternion.identity;
+            if (_staticScenePrefab != null)
+            {
+                _staticScene = Instantiate(_staticScenePrefab);
+                _staticScene.transform.SetParent(ARCSession.origin);
+                _staticScene.transform.localPosition = Vector3.zero;
+                _staticScene.transform.localRotation = Quaternion.identity;
+            }
 
             sessionEvents.sessionAnchorCreated.Invoke();
         }
@@ -316,7 +335,14 @@ namespace ARC
                 Vector2 screenPosition = _cam.WorldToScreenPoint(trackedImage.transform.position);
                 if (_raycastManager.Raycast(screenPosition, hits, TrackableType.PlaneWithinPolygon))
                 {
-                    GameObject instance = Instantiate(_scanningPrefab, hits[0].pose.position, Quaternion.identity);
+                    GameObject instance;
+                    if (_scanningPrefab == null)
+                    {
+                        instance = new GameObject();
+                        instance.transform.position = hits[0].pose.position;
+                    }
+                    else
+                        instance = Instantiate(_scanningPrefab, hits[0].pose.position, Quaternion.identity);
                     instance.name = trackedImage.referenceImage.name;
                     _anchoringGizmos.Add(trackedImage.referenceImage.name, instance);
                     _scanningTimes.Add(trackedImage.referenceImage.name, 0f);

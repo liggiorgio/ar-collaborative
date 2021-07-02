@@ -13,7 +13,6 @@ namespace ARC
 	public class ARCSessionListener : CaptainsMessListener
 	{
 		public GameObject sharedSessionPrefab;
-		public Text networkStateField;
 
 		public UnityEvent startConnecting;
 		public UnityEvent stopConnecting;
@@ -33,11 +32,6 @@ namespace ARC
 		{
 			_networkState = ARCNetworkState.Offline;
 			ClientScene.RegisterPrefab(sharedSessionPrefab);
-		}
-
-		void Update()
-		{
-			networkStateField.text = _networkState.ToString();	
 		}
 
 		public override void OnStartConnecting()
