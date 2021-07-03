@@ -199,6 +199,7 @@ namespace ARC
                     // Library created, now tracking images
                     _trackedImageManager.enabled = true;
                     _planeManager.enabled = true;
+                    _planeManager.requestedDetectionMode = PlaneDetectionMode.Horizontal;
                     _raycastManager.enabled = true;
                     networkEvents.receivingCompleted.Invoke();
                     Debug.Log("Markers finalized");
