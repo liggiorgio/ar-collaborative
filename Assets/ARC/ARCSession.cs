@@ -210,7 +210,7 @@ namespace ARC
         {
             _sessionState = ARCSessionState.Offline;
             if (origin != null)
-                Destroy(origin.root);
+                Destroy(origin.root.gameObject);
         }
 
         // CaptainsMess callback
