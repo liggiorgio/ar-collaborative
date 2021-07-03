@@ -89,7 +89,16 @@ namespace ARC
             // Copy camera frame to our render texture
             RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
             ARCameraBackground arCameraBackground = FindObjectOfType<ARCameraBackground>();
-            Graphics.Blit(null, renderTexture, arCameraBackground.material);
+            try
+            {
+                Graphics.Blit(null, renderTexture, arCameraBackground.material);
+            }
+
+            catch
+            {
+                Debug.LogError("No camera input available.");
+                return;
+            }
 
             // Crop centred square area from camera frame to our texture
             RenderTexture.active = renderTexture;
