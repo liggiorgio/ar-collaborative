@@ -209,6 +209,8 @@ namespace ARC
         public void OnLeftLobby()
         {
             _sessionState = ARCSessionState.Offline;
+            if (origin != null)
+                Destroy(origin.root);
         }
 
         // CaptainsMess callback

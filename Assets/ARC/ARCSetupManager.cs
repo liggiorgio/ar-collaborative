@@ -35,8 +35,8 @@ namespace ARC
         Camera _cam;
         List<Texture2D> _capturedImages;
         ARCRuntimeLibraryBuilder _runtimeLibrary;
-        Dictionary<string, GameObject> _anchoringGizmos;
-        SortedList<string, GameObject> _anchors;
+        Dictionary<string, GameObject> _gizmosScanning;
+        SortedList<string, GameObject> _gizmosScanned;
         List<string> _scannedImages;
         SortedList<string, float> _scanningTimes;
         GameObject _staticScene;
@@ -74,11 +74,11 @@ namespace ARC
 
             _capturedImages = new List<Texture2D>();
             _runtimeLibrary = new ARCRuntimeLibraryBuilder();
-            _anchors = new SortedList<string, GameObject>();
+            _gizmosScanned = new SortedList<string, GameObject>();
 
             _scannedImages = new List<string>();
             _scanningTimes = new SortedList<string, float>();
-            _anchoringGizmos = new Dictionary<string, GameObject>();
+            _gizmosScanning = new Dictionary<string, GameObject>();
         }
 
         public void CaptureImage()
@@ -132,10 +132,10 @@ namespace ARC
             _planeManager.enabled = true;
             _raycastManager.enabled = true;
 
-            foreach (GameObject go in _anchors.Values) Destroy(go);
-            foreach (GameObject go in _anchoringGizmos.Values) Destroy(go);
-            _anchors.Clear();
-            _anchoringGizmos.Clear();
+            foreach (GameObject go in _gizmosScanned.Values) Destroy(go);
+            foreach (GameObject go in _gizmosScanning.Values) Destroy(go);
+            _gizmosScanned.Clear();
+            _gizmosScanning.Clear();
             _scannedImages.Clear();
             _scanningTimes.Clear();
         }
@@ -147,10 +147,10 @@ namespace ARC
             _raycastManager.enabled = false;
             _trackedImageManager.referenceLibrary = null;
 
-            foreach (GameObject go in _anchors.Values) Destroy(go);
-            foreach (GameObject go in _anchoringGizmos.Values) Destroy(go);
-            _anchors.Clear();
-            _anchoringGizmos.Clear();
+            foreach (GameObject go in _gizmosScanned.Values) Destroy(go);
+            foreach (GameObject go in _gizmosScanning.Values) Destroy(go);
+            _gizmosScanned.Clear();
+            _gizmosScanning.Clear();
             _scannedImages.Clear();
             _scanningTimes.Clear();
             _runtimeLibrary.ClearReferenceImages();
@@ -242,7 +242,7 @@ namespace ARC
             else
                 newAnchor = Instantiate(_markerPendingPrefab, position, Quaternion.identity);
             
-            _anchors.Add(name, newAnchor);
+            _gizmosScanned.Add(name, newAnchor);
             
             int markerIndex = Convert.ToInt32(name.Substring(name.Length - 1));
             scanEvents.markerScanned.Invoke(markerIndex);
@@ -251,33 +251,33 @@ namespace ARC
         public void CreateSessionAnchor()
         {
             Vector3 centre = Vector3.zero;
-            List<Vector3> anchors = new List<Vector3>();
-            foreach (GameObject go in _anchors.Values)
+            List<Vector3> gizmosFinalisedPositions = new List<Vector3>();
+            foreach (GameObject go in _gizmosScanned.Values)
             {
                 centre += go.transform.position;
-                anchors.Add(go.transform.position);
+                gizmosFinalisedPositions.Add(go.transform.position);
             }
-            centre /= _anchors.Values.Count;
+            centre /= _gizmosScanned.Values.Count;
 
-            Vector3 origin = _anchors.Values[0].transform.position;
+            Vector3 origin = _gizmosScanned.Values[0].transform.position;
             Vector3 lookAt = centre - origin;
             lookAt.y = 0f;
             Quaternion orientation = Quaternion.LookRotation(lookAt);
             
-            foreach (Vector3 a in anchors)
+            foreach (Vector3 v in gizmosFinalisedPositions)
             {
-                GameObject anchor;
+                GameObject gizmoGo;
                 if (_markerDonePrefab == null)
                 {
-                    anchor = new GameObject();
-                    anchor.transform.position = a;
+                    gizmoGo = new GameObject();
+                    gizmoGo.transform.position = v;
                 }
                 else
-                    anchor = Instantiate(_markerDonePrefab, a, Quaternion.identity);
+                    gizmoGo = Instantiate(_markerDonePrefab, v, Quaternion.identity);
             }
 
-            for (int i = 0; i < _anchors.Values.Count; ++i) { Destroy(_anchors.Values[i]); }
-            _anchors.Clear();
+            for (int i = 0; i < _gizmosScanned.Values.Count; ++i) { Destroy(_gizmosScanned.Values[i]); }
+            _gizmosScanned.Clear();
 
             CreateAnchor(origin, orientation);
 
@@ -353,7 +353,7 @@ namespace ARC
                     else
                         instance = Instantiate(_scanningPrefab, hits[0].pose.position, Quaternion.identity);
                     instance.name = trackedImage.referenceImage.name;
-                    _anchoringGizmos.Add(trackedImage.referenceImage.name, instance);
+                    _gizmosScanning.Add(trackedImage.referenceImage.name, instance);
                     _scanningTimes.Add(trackedImage.referenceImage.name, 0f);
                 }
             }
@@ -369,14 +369,14 @@ namespace ARC
                     Vector2 screenPosition = _cam.WorldToScreenPoint(trackedImage.transform.position);
                     if (_raycastManager.Raycast(screenPosition, hits, TrackableType.PlaneWithinPolygon))
                     {
-                        if (!_anchoringGizmos.ContainsKey(trackedImage.referenceImage.name))
+                        if (!_gizmosScanning.ContainsKey(trackedImage.referenceImage.name))
                         {
                             GameObject instance = Instantiate(_scanningPrefab, hits[0].pose.position, Quaternion.identity);
                             instance.name = trackedImage.referenceImage.name;
-                            _anchoringGizmos.Add(trackedImage.referenceImage.name, instance);
+                            _gizmosScanning.Add(trackedImage.referenceImage.name, instance);
                             _scanningTimes.Add(trackedImage.referenceImage.name, 0f);
                         }
-                        _anchoringGizmos[trackedImage.referenceImage.name].transform.position = hits[0].pose.position;
+                        _gizmosScanning[trackedImage.referenceImage.name].transform.position = hits[0].pose.position;
                         _scanningTimes[trackedImage.referenceImage.name] += Time.unscaledDeltaTime;
                         
                         if (_scanningTimes[trackedImage.referenceImage.name] >= _scanningTime)
@@ -385,8 +385,8 @@ namespace ARC
                             RegisterMarkerPosition(hits[0].pose.position, trackedImage.referenceImage.name);
 
                             _scannedImages.Add(trackedImage.referenceImage.name);
-                            //Destroy(_anchoringGizmos[trackedImage.referenceImage.name]);
-                            _anchoringGizmos.Remove(trackedImage.referenceImage.name);
+                            Destroy(_gizmosScanning[trackedImage.referenceImage.name]);
+                            _gizmosScanning.Remove(trackedImage.referenceImage.name);
                             _scanningTimes.Remove(trackedImage.referenceImage.name);
 
                             _trackedImageManager.requestedMaxNumberOfMovingImages = _trackedImageManager.requestedMaxNumberOfMovingImages - 1;
@@ -400,10 +400,10 @@ namespace ARC
                     }
                 }
 
-                if (_anchoringGizmos.ContainsKey(trackedImage.referenceImage.name))
+                if (_gizmosScanning.ContainsKey(trackedImage.referenceImage.name))
                 {
-                    Destroy(_anchoringGizmos[trackedImage.referenceImage.name]);
-                    _anchoringGizmos.Remove(trackedImage.referenceImage.name);
+                    Destroy(_gizmosScanning[trackedImage.referenceImage.name]);
+                    _gizmosScanning.Remove(trackedImage.referenceImage.name);
                     _scanningTimes.Remove(trackedImage.referenceImage.name);
                 }
             }
@@ -414,10 +414,10 @@ namespace ARC
                 if (_scannedImages.Contains(eventArgs.removed[i].referenceImage.name)) { continue; }
                 trackedImage = eventArgs.removed[i];
 
-                if (_anchoringGizmos.ContainsKey(trackedImage.referenceImage.name))
+                if (_gizmosScanning.ContainsKey(trackedImage.referenceImage.name))
                 {
-                    Destroy(_anchoringGizmos[trackedImage.referenceImage.name]);
-                    _anchoringGizmos.Remove(trackedImage.referenceImage.name);
+                    Destroy(_gizmosScanning[trackedImage.referenceImage.name]);
+                    _gizmosScanning.Remove(trackedImage.referenceImage.name);
                     _scanningTimes.Remove(trackedImage.referenceImage.name);
                 }
             }
