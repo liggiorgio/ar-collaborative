@@ -24,7 +24,7 @@ CaptainsMess is a library built on top of the HLAPI, and manages network discove
 
 To add the **AR Collaborative** library to a new or existing AR project, download and move *Assets/**ARC*** into your own Assets folder.
 
-You can find extensive usage information for every Component and class in the Wiki.
+You can find extensive usage information for every Component and class in the [dedicated wiki](https://github.com/liggiorgio/ar-collaborative/wiki).
 
 ## Sample projects
 
