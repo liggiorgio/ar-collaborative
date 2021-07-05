@@ -16,12 +16,12 @@ namespace ARC
         [SerializeField] int _updateRate = 20;
         [SerializeField] float _positionThreshold = 0.1f;
         [SerializeField] float _rotationThreshold = 10f;
-        [SerializeField] UnityEvent _clientEnterLobby;
-        [SerializeField] UnityEvent _clientExitLobby;
-        [SerializeField] ARCBoolEvent _clientReady;
-        [SerializeField] UnityEvent _gameStarted;
-        [SerializeField] UnityEvent _grabEvent;
-        [SerializeField] UnityEvent _releaseEvent;
+        public UnityEvent _clientEnterLobby;
+        public UnityEvent _clientExitLobby;
+        public ARCBoolEvent _clientReady;
+        public UnityEvent _gameStarted;
+        public UnityEvent _grabEvent;
+        public UnityEvent _releaseEvent;
 
         public Vector3 localCameraPosition
         {

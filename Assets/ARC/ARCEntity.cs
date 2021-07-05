@@ -34,8 +34,8 @@ namespace ARC
         [SerializeField] float _forkliftFactor = 1f;
         [SerializeField] bool _snapToGrid = false;
         [SerializeField] float _gridSize = 1f;
-        [SerializeField] UnityEvent _grabEvent;
-        [SerializeField] UnityEvent _releaseEvent;
+        public UnityEvent _grabEvent;
+        public UnityEvent _releaseEvent;
 
         public bool isMoving { get { return !_isAtRest; } }
         public bool isInteracting { get { return handler != null; } }
