@@ -404,7 +404,7 @@ MonoBehaviour:
   broadcastIdentifier: HelloARC
   minPlayers: 1
   maxPlayers: 4
-  playerPrefab: {fileID: 1888097797102869547, guid: a93bd39d150cfc03eb33d011e843c06e, type: 3}
+  playerPrefab: {fileID: 7719254331248713758, guid: 58097f6ad6e24d7f9b2c8f99a5ceac34, type: 3}
   countdownDuration: 3
   listener: {fileID: 593965167}
   verboseLogging: 0
