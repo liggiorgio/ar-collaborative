@@ -41,7 +41,7 @@ public class GameActions : NetworkBehaviour
     [Command]
     void CmdSpawnCube(Vector3 position, Quaternion rotation)
     {
-        ARCSession.Spawn(ARCSession.session.SharedSessionPrefabs[0], position, rotation);
+        ARCSession.Spawn(ARCSession.session.sharedSessionPrefabs[0], position, rotation);
     }
 
     [Command]

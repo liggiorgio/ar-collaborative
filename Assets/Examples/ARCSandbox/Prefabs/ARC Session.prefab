@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6008f6b58c88c544bb10d461c64bbc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SharedSessionPrefabs:
+  sharedSessionPrefabs:
   - {fileID: 6549863558081941246, guid: f04de60a473b2f4008b48016e54f17fe, type: 3}
   - {fileID: 4636820081015346217, guid: 14b7d60c17206aa21b06ff601d971f34, type: 3}
   - {fileID: 3734461922432998203, guid: 0b6ff514ab9141f3387092623511a260, type: 3}

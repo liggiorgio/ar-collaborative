@@ -161,8 +161,6 @@ MonoBehaviour:
   _rotationMode: 0
   _lookForward: 0
   _forkliftFactor: 1
-  _throwOnRelease: 0
-  _throwFactor: 1
   _snapToGrid: 1
   _gridSize: 0.5
   _grabEvent:

@@ -319,7 +319,7 @@ public class UserInteraction : NetworkBehaviour
     [Command]
     void CmdSpawnEntity(int index, Vector3 position, Quaternion rotation)
     {
-        ARCSession.Spawn(ARCSession.session.SharedSessionPrefabs[index], position, rotation);
+        ARCSession.Spawn(ARCSession.session.sharedSessionPrefabs[index], position, rotation);
     }
 
     [Command]
@@ -378,7 +378,7 @@ public class UserInteraction : NetworkBehaviour
         int layer = 1 | (1 << 3);
         Vector3 location = ARCSession.RaycastPosition(position, rotation * Vector3.forward, 100f, layer);
         if (location != Vector3.negativeInfinity)
-            ARCSession.Spawn(ARCSession.session.SharedSessionPrefabs[9], location, Quaternion.identity);
+            ARCSession.Spawn(ARCSession.session.sharedSessionPrefabs[9], location, Quaternion.identity);
     }
 
     [Command]

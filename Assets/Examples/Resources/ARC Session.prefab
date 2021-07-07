@@ -77,5 +77,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6008f6b58c88c544bb10d461c64bbc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SharedSessionPrefabs:
+  sharedSessionPrefabs:
   - {fileID: 1351380979063200373, guid: d13e5541007c96a24801b08c44a2e284, type: 3}
