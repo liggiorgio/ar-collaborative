@@ -12,7 +12,7 @@ namespace ARC
     [DisallowMultipleComponent]
     public class ARCSession : NetworkBehaviour
     {
-        public GameObject[] SharedSessionPrefabs;
+        public GameObject[] sharedSessionPrefabs;
 
         public static ARCSession session { get; private set; }
         public static Transform origin;
@@ -45,7 +45,7 @@ namespace ARC
         {
             _targetsReady = 0;
 
-            foreach (GameObject go in SharedSessionPrefabs) { ClientScene.RegisterPrefab(go); }
+            foreach (GameObject go in sharedSessionPrefabs) { ClientScene.RegisterPrefab(go); }
 
             FindObjectOfType<ARCSessionListener>().sharedSession = this;
             _anchorManager = FindObjectOfType<ARAnchorManager>();
@@ -259,9 +259,9 @@ namespace ARC
         }
 
         // Perform a raycast in the session local space, returning the ARCEntity hit
-        public static ARCEntity RaycastEntity(Vector3 origin, Vector3 direction, float maxDistance, int layerMask)
+        public static ARCEntity RaycastEntity(Vector3 from, Vector3 direction, float maxDistance, int layerMask)
         {
-            Vector3 wOrigin = ARCSession.origin.TransformPoint(origin);
+            Vector3 wOrigin = ARCSession.origin.TransformPoint(from);
             Vector3 wDirection = ARCSession.origin.TransformDirection(direction);
             RaycastHit hitInfo;
             
@@ -271,9 +271,9 @@ namespace ARC
             return null;
         }
 
-        public static Vector3 RaycastPosition(Vector3 origin, Vector3 direction, float maxDistance, int layerMask)
+        public static Vector3 RaycastPosition(Vector3 from, Vector3 direction, float maxDistance, int layerMask)
         {
-            Vector3 wOrigin = ARCSession.origin.TransformPoint(origin);
+            Vector3 wOrigin = ARCSession.origin.TransformPoint(from);
             Vector3 wDirection = ARCSession.origin.TransformDirection(direction);
             RaycastHit hitInfo;
             

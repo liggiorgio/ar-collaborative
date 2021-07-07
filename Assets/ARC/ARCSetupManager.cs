@@ -232,7 +232,7 @@ namespace ARC
             }
         }
 
-        public void RegisterMarkerPosition(Vector3 position, string name)
+        void RegisterMarkerPosition(Vector3 position, string name)
         {
             GameObject newAnchor;
             if (_markerPendingPrefab == null)
@@ -249,7 +249,7 @@ namespace ARC
             scanEvents.markerScanned.Invoke(markerIndex);
         }
 
-        public void CreateSessionAnchor()
+        void CreateSessionAnchor()
         {
             Vector3 centre = Vector3.zero;
             List<Vector3> gizmosFinalisedPositions = new List<Vector3>();

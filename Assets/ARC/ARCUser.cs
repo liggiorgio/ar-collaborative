@@ -16,12 +16,12 @@ namespace ARC
         [SerializeField] int _updateRate = 20;
         [SerializeField] float _positionThreshold = 0.1f;
         [SerializeField] float _rotationThreshold = 10f;
-        public UnityEvent _clientEnterLobby;
-        public UnityEvent _clientExitLobby;
-        public ARCBoolEvent _clientReady;
-        public UnityEvent _gameStarted;
-        public UnityEvent _grabEvent;
-        public UnityEvent _releaseEvent;
+        public UnityEvent clientEnterLobby;
+        public UnityEvent clientExitLobby;
+        public ARCBoolEvent clientReady;
+        public UnityEvent gameStarted;
+        public UnityEvent grabEvent;
+        public UnityEvent releaseEvent;
 
         public Vector3 localCameraPosition
         {
@@ -128,14 +128,14 @@ namespace ARC
         public override void OnClientEnterLobby()
         {
             base.OnClientEnterLobby();
-            _clientEnterLobby.Invoke();
+            clientEnterLobby.Invoke();
         }
 
         // CaptainsMess callback
         public override void OnClientReady(bool readyState)
         {
             base.OnClientReady(readyState);
-            _clientReady.Invoke(readyState);
+            clientReady.Invoke(readyState);
         }
 
         // CaptainsMess callback
@@ -143,7 +143,7 @@ namespace ARC
         {
             base.OnClientExitLobby();
             StopAllCoroutines();
-            _clientExitLobby.Invoke();
+            clientExitLobby.Invoke();
         }
 
         // Request session markers, and download them if already available
@@ -186,19 +186,19 @@ namespace ARC
         [ClientRpc]
         public void RpcOnStartedGame()
         {
-            _gameStarted.Invoke();
+            gameStarted.Invoke();
         }
 
         public void OnGrabEntity(ARCEntity entity)
         {
             interactingEntity = entity;
-            _grabEvent.Invoke();
+            grabEvent.Invoke();
         }
 
         public void OnReleaseEntity()
         {
             interactingEntity = null;
-            _releaseEvent.Invoke();
+            releaseEvent.Invoke();
         }
     }
 }
