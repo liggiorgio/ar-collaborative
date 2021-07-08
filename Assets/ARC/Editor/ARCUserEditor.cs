@@ -22,13 +22,13 @@ public class ARCUserEditor : Editor
         updateRateProperty = serializedObject.FindProperty("_updateRate");
         positionThresholdProperty = serializedObject.FindProperty("_positionThreshold");
         rotationThresholdProperty = serializedObject.FindProperty("_rotationThreshold");
-        clientEnterLobbyProperty = serializedObject.FindProperty("_clientEnterLobby");
-        clientExitLobbyProperty = serializedObject.FindProperty("_clientExitLobby");
-        sessionAnchorCreatedProperty = serializedObject.FindProperty("_sessionAnchorCreated");
-        clientReadyProperty = serializedObject.FindProperty("_clientReady");
-        gameStartedProperty = serializedObject.FindProperty("_gameStarted");
-        grabEventProperty = serializedObject.FindProperty("_grabEvent");
-        releaseEventProperty = serializedObject.FindProperty("_releaseEvent");
+        clientEnterLobbyProperty = serializedObject.FindProperty("clientEnterLobby");
+        clientExitLobbyProperty = serializedObject.FindProperty("clientExitLobby");
+        sessionAnchorCreatedProperty = serializedObject.FindProperty("sessionAnchorCreated");
+        clientReadyProperty = serializedObject.FindProperty("clientReady");
+        gameStartedProperty = serializedObject.FindProperty("gameStarted");
+        grabEventProperty = serializedObject.FindProperty("grabEvent");
+        releaseEventProperty = serializedObject.FindProperty("releaseEvent");
     }
 
     public override void OnInspectorGUI()
