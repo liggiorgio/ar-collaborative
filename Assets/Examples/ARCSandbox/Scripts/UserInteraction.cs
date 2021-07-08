@@ -9,6 +9,7 @@ public class UserInteraction : NetworkBehaviour
     public bool autograbOnSpawn;
     public Sprite grabIcon;
     public Sprite releaseIcon;
+    public GameObject touchFeedback;
     
     ARCUser user;
     GameObject np;
@@ -58,6 +59,8 @@ public class UserInteraction : NetworkBehaviour
 
             ToggleUI(false);
         }
+        else
+            touchFeedback.transform.parent.GetComponent<Canvas>().enabled = false;
     }
 
     void Update()
@@ -68,9 +71,24 @@ public class UserInteraction : NetworkBehaviour
             np.GetComponentInChildren<Text>().text = user.username;
         }
 
-        if (ARCSession.sessionState != ARCSessionState.Playing) return;
+        if (!isLocalPlayer)
+            return;
+        else
+        {
+            if (Input.touchCount == 1)
+            {
+                Touch touch = Input.touches[0];
 
-        if (!isLocalPlayer) return;
+                touchFeedback.SetActive(true);
+                touchFeedback.transform.position = touch.position;
+            }
+            else
+            {
+                touchFeedback.SetActive(false);
+            }
+        }
+
+        if (ARCSession.sessionState != ARCSessionState.Playing) return;
 
         if (user.interactingEntity == null)
         {
