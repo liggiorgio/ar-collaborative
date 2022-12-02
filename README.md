@@ -1,8 +1,8 @@
 # AR Collaborative
 
-**AR Collaborative** is a library for developing AR multiuser experiences or multiplayer games in Unity where people share the same physical space. A shared [AR Anchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/api/UnityEngine.XR.ARFoundation.ARAnchor.html) is placed based on photos of the environment, and state synchronisation occurs over LAN.
+**AR Collaborative** is a library for developing AR multi-user experiences or multiplayer games in Unity where people share the same physical space. A shared [AR Anchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/api/UnityEngine.XR.ARFoundation.ARAnchor.html) is placed based on photos of the environment, and state synchronisation occurs over LAN.
 
-**AR Collaborative** can be used in a variety of scenarios: as a testing environment for a multiuser app, requiring a quick setup, before implementing more complex solutions; as a complete alternative to such solutions; as a fallback solution when cross-platform support is needed or when an internet connection is not viable.
+**AR Collaborative** can be used in a variety of scenarios: as a testing environment for a multi-user app, requiring a quick setup, before implementing more complex solutions; as a complete alternative to such solutions; as a fallback solution when cross-platform support is needed or when an internet connection is not viable.
 
 ## How it works
 
